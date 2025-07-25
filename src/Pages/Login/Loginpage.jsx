@@ -18,13 +18,23 @@ export default function LoginPage() {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        if (res.data.user.PermissionLevel === '1') {
+        localStorage.setItem('token', res.data.token); //set token value in local storage
+        localStorage.setItem('key',res.data.user.UserID)//set user unique id in local storage
+
+
+
+        //Hold this part (THAWAKALIKAWA)
+        /* if (res.data.user.PermissionLevel === '1') {
           toast.success('Login Success 😎👌');
           navigate('/home');
         } else {
           navigate('/');
-        }
+        } */
+
+
+
+
+
       })
       .catch((error) => {
         console.log(error);

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function TestTwo(){
+export default function AccountPage(){
     const params =useParams(); //Read and Assign The parameter  //passed
     const key=params.key;
     const navigate=useNavigate();
@@ -101,9 +101,21 @@ export default function TestTwo(){
         <InfoRow label="Payable Installment" value={`Rs. ${parseFloat(details.PAYABLE_INSTALLMENT).toFixed(2)}`} />
         <InfoRow label="Last Paid Date" value={new Date(details.LAST_PAID).toLocaleDateString()} />
       </div>
-      <div>
-        <button onClick={()=>{navigate("")}}></button>
-      </div>
+      <div className="mt-6 flex justify-between">
+        <button
+            onClick={() => navigate("/add", { state: details })}
+            className="bg-accent text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-200 hover:bg-primary hover:text-black"
+        >
+            Add New Entry
+        </button>
+        <button
+            /* onClick={() => navigate("/update", { state: details })} */
+            className="bg-accent text-white font-semibold px-6 py-2 rounded-xl shadow-md transition duration-200 hover:bg-primary hover:text-black"
+        >
+            Update last Entry
+        </button>
+       </div>
+
     </div>
   )}
 </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerPage() {
   const [members, setMembers] = useState([]);
@@ -9,6 +10,8 @@ export default function CustomerPage() {
 
   const key = localStorage.getItem("key");
   const token = localStorage.getItem("token");
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (token && key) {
@@ -41,7 +44,7 @@ export default function CustomerPage() {
     <div className="p-6 bg-primary min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-black">Customer List</h1>
+        <h1 className="text-2xl font-bold text-black ml-[250px]">Customer List</h1>
         <input
           type="text"
           placeholder="Search by ID, Name or NIC..."
@@ -100,7 +103,9 @@ export default function CustomerPage() {
                   key={index}
                   className="border-black border-x-2 hover:bg-secoundary cursor-pointer transition"
                   onDoubleClick={() =>
-                    console.log("HI", member.CustomerID)
+                    /* console.log("HI", member.CustomerID); */
+                    navigate(`/account/${member.CustomerID}`)
+
                   }
                 >
                   <td className="border px-4 py-2">{member.CustomerID}</td>

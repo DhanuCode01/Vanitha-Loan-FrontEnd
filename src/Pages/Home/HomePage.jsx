@@ -2,7 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import SideBar from "../../Components/SideBar";
 import CustomerPage from "../Customer/CustomerPage";
 import AccountPage from "../Account/AccountPage";
-import { TestThree } from "../../test/TestThree";
+import RightBar from "../../Components/RightBar";
+
+
 
 export default function HomePage() {
   return (
@@ -12,10 +14,9 @@ export default function HomePage() {
         <Routes>
           <Route path="/customer" element={<CustomerPage/>} />
           <Route path="/account/:key" element={<AccountPage/>} />
-          <Route path="/add" element={<TestThree/>} />
-
         </Routes>
       </div>
+      <RightBar/>
     </div>
   );
 }

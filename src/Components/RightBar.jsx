@@ -2,9 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import InstallmentCard from "../../Components/InstallmentCard";
+import InstallmentCard from "./InstallmentCard";
 
-export default function CustomerPage() {
+
+export default function RightBar() {
   const [members, setMembers] = useState([]);
   const [loaded, SetLoaded] = useState("loading");
 
@@ -39,7 +40,7 @@ const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 
 
 
   return (
-    <div className="p-6 bg-primary min-h-screen">
+    <div className="w-[300px] h-screen flex bg-primary">
   
       {/* Loading / Error / Table */}
       {loaded === "loading" && (

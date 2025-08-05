@@ -18,9 +18,12 @@ export default function LoginPage() {
         password: password,
       })
       .then((res) => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         localStorage.setItem('token', res.data.token); //set token value in local storage
-        localStorage.setItem('key',res.data.user.UserID)//set user unique id in local storage
-
+        localStorage.setItem('user', JSON.stringify(res.data.data));//set user data in local storage
+        
+        navigate('/customer')
 
 
         //Hold this part (THAWAKALIKAWA)

@@ -39,7 +39,7 @@ const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 
 
 
   return (
-    <div className="p-6 bg-primary min-h-screen">
+    <div className="px-4 py-6 md:px-6 bg-primary min-h-screen">
   
       {/* Loading / Error / Table */}
       {loaded === "loading" && (
@@ -72,11 +72,11 @@ const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 
       )}
 
       {loaded === "Loaded" && (
-        <div>
+        <div className="space-y-4">
         {members.map((member, idx) => (
                     <InstallmentCard key={idx} idx={idx} member={member}/>
                   ))}
-              <h6 className="mt-4 text-lg font-semibold text-accent">
+              <h6 className="mt-4 text-base md:text-lg font-semibold text-accent">
                 Today Total: {total}
               </h6>
           </div>

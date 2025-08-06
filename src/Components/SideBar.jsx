@@ -39,7 +39,7 @@ export default function SideBar() {
   );
 
   return (
-    <div className="w-[300px] h-screen flex bg-primary">
+    <div className="h-full md:h-screen flex bg-primary">
       <aside className="w-full h-full bg-white shadow-lg flex flex-col border-r border-gray-200">
         {/* Logo Section */}
         <div className="w-full h-[100px] flex justify-center items-center border-b border-gray-200 bg-primary">
@@ -65,7 +65,7 @@ export default function SideBar() {
         
 
         {/* Members List */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-primary">
+        <div className="flex-1 overflow-y-auto p-2 md:p-3 space-y-3 bg-primary">
           {loaded === "Loading" && (
             <div className="flex items-center gap-3 text-accent animate-pulse">
               <svg

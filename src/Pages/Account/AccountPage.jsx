@@ -87,10 +87,10 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-primary p-6">
+    <div className="min-h-screen bg-primary px-4 py-6 md:px-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-black ml-[250px]">
+        <h1 className="text-xl md:text-2xl font-bold text-black text-center md:text-left">
           Account Details - {key}
         </h1>
       </div>
@@ -128,17 +128,17 @@ export default function AccountPage() {
 
       {/* Loaded */}
       {loaded === "Loaded" && details && (
-        <div>
+        <div className="space-y-8">
           {details.map((detail, index) => (
             <div
               key={detail.ACCOUNT_NO || index}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 max-w-3xl mx-auto mt-[100px]"
+              className="bg-white rounded-xl shadow-lg p-4 md:p-6 border border-gray-200 w-full max-w-full mx-auto"
             >
-              <h2 className="text-2xl font-semibold text-accent mb-4 border-b pb-2">
+              <h2 className="text-lg md:text-2xl font-semibold text-accent mb-4 border-b pb-2">
                 ACCOUNT NUMBER : {detail.ACCOUNT_NO}
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-m text-gray-700">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
                 <InfoRow label="Account Number" value={detail.ACCOUNT_NO} />
                 <InfoRow label="Customer ID" value={detail.CUS_ID} />
                 <InfoRow label="Ledger Name" value={detail.LEDGER_NAME} />

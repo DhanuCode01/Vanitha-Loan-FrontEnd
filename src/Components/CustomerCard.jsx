@@ -7,10 +7,8 @@ export default function CustomerCard({ idx, member }) {
 
   return (
     <div
-      role="button"
-      tabIndex={0}
       className="p-2 rounded-xl bg-secondary hover:bg-accent text-black hover:text-white transition-colors duration-200 shadow-md cursor-pointer space-y-1"
-      onClick={() =>/*  console.log("HI") */navigate(`/account/${member.CustomerID}`)
+      onTouchStart={() =>/*  console.log("HI") */navigate(`/account/${member.CustomerID}`)
                   }
     >
       <h5 className=" font-semibold truncate text-xs">

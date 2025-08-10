@@ -34,14 +34,15 @@ function App() {
 
             <Routes>
 
-                  <Route path="/" element={<RedirectByDevice />} />
+                  <Route path="/main" element={<RedirectByDevice />} />
                   <Route path="/mobile/*" element={< MobilePage/>} />
                   <Route path="/desktop/*" element={<HomePage />} />
     
                   <Route path="/login" element={<LoginPage/>}/> 
-                  <Route path="/register" element={<RegisterPage/>}/>
-                  <Route path="/sidebar" element={<SideBar/>}/>
-                  <Route path="/start" element={<GetStart/>}/>
+                  <Route path="/" element={<GetStart/>}/>
+                  
+                  {/* <Route path="/register" element={<RegisterPage/>}/>
+                  <Route path="/sidebar" element={<SideBar/>}/> */}
                   {/* <Route path="/customer" element={<CustomerPage/>}/> */}
                   {/* <Route path="/*" element={<HomePage/>}/>  */} 
             </Routes>

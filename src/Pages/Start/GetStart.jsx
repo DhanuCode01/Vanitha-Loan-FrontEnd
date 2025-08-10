@@ -39,7 +39,7 @@ export default function GetStart(){
         
     } */
         return(
-        <div className='h-full w-full m-4 flex justify-center items-center relative  '>
+        <div className='h-screen w-screen m-4 flex justify-center items-center relative  '>
 
                     <video className='h-screen w-screen object-cover' src={Bank} autoPlay loop muted  />
 {/*                     <div className="h-[60px] w-fit px-6 bg-white/10 backdrop-blur-md border border-white/20 shadow-xl fixed top-4 right-4 rounded-full flex items-center gap-6 text-white font-medium text-sm z-30">
@@ -57,7 +57,7 @@ export default function GetStart(){
                         </Link>
                     </div> */}
 
-                    <div className="h-[480px] w-[420px] absolute z-20 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl flex flex-col justify-center items-center gap-4 px-8 py-6 font-['Roboto'] text-white text-center animate-fade-in">
+                    <div className="h-[420px] w-[380px] absolute z-20 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl flex flex-col justify-center items-center gap-4 px-8 py-6 font-['Roboto'] text-white text-center animate-fade-in">
     
                                 <img
                                     src="/logo.jpg"

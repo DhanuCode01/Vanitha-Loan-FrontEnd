@@ -47,7 +47,7 @@ export default function LoginPage() {
 
   return (
     <div
-      className="w-full h-screen flex justify-center items-center bg-cover bg-center"
+      className="w-screen h-screen flex justify-center items-center bg-cover bg-center"
       style={{ backgroundImage: "url('/finance.jpg')" }}
     >
       <form onSubmit={handleOnSubmit} className="w-[380px]">

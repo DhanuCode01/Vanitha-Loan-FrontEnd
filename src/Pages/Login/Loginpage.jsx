@@ -23,7 +23,7 @@ export default function LoginPage() {
         localStorage.setItem('token', res.data.token); //set token value in local storage
         localStorage.setItem('user', JSON.stringify(res.data.data));//set user data in local storage
         
-        navigate('/customer')
+        navigate("/desktop/customer");
 
 
         //Hold this part (THAWAKALIKAWA)

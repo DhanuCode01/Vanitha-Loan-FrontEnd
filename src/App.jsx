@@ -10,6 +10,7 @@ import SideBar from './Components/SideBar'
 import CustomerPage from './Pages/Customer/CustomerPage'
 import HomePage from './Pages/Home/HomePage'
 import { useMediaQuery } from 'react-responsive'
+import MobilePage from './Pages/Mobile/MobilePage'
 
 
 function RedirectByDevice() {
@@ -18,7 +19,7 @@ function RedirectByDevice() {
 
   useEffect(() => {
     if (isMobile) nav("/mobile", { replace: true });
-    else nav("/desktop", { replace: true });
+    else nav("/desktop/customer", { replace: true });
   }, [isMobile, nav]);
 
   return null; // nothing visible, just redirect
@@ -34,8 +35,8 @@ function App() {
             <Routes>
 
                   <Route path="/" element={<RedirectByDevice />} />
-                  <Route path="/mobile" element={< GetStart/>} />
-                  <Route path="/desktop" element={<HomePage />} />
+                  <Route path="/mobile/*" element={< MobilePage/>} />
+                  <Route path="/desktop/*" element={<HomePage />} />
     
                   <Route path="/login" element={<LoginPage/>}/> 
                   <Route path="/register" element={<RegisterPage/>}/>

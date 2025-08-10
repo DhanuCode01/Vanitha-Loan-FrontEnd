@@ -18,7 +18,7 @@ export default function MobileSideBars() {
   const [members, setMembers] = useState([]); //left bar useState details
   const [loaded, setLoaded] = useState("Loading");
   const [searchTerm, setSearchTerm] = useState("");
-  const [showSideBar,setShowSideBar]=useState(true);
+  const [showSideBar,setShowSideBar]=useState(false);
 
   useEffect(() => { //leftbar useEffect
 

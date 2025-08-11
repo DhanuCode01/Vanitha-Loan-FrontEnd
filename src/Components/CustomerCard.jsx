@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
-export default function CustomerCard({ idx, member }) {
+export default function CustomerCard({ idx, member ,refresh }) {
   const navigate = useNavigate();
   
   // Detect mobile screen size (max width 767px)
@@ -11,6 +11,7 @@ export default function CustomerCard({ idx, member }) {
   const handleNavigate = () => {
     if (isMobile) {
       navigate(`/mobile/account/${member.CustomerID}`);
+      refresh();
     } else {
       navigate(`/desktop/account/${member.CustomerID}`);
     }

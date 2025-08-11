@@ -80,6 +80,11 @@ const total = installment.reduce((acc, ins) => acc + (ins.CreditAmount || 0), 0)
       member.NIC?.toLowerCase().includes(searchTerm.toLowerCase())                      //check NIC
   );
 
+
+  function hideSideBar(){   //hide Side bar after select one account
+    setShowSideBar(false);
+  }
+
   return (
           <>
 
@@ -163,7 +168,7 @@ const total = installment.reduce((acc, ins) => acc + (ins.CreditAmount || 0), 0)
                     )}
 
                     {filteredMembers.map((member, idx) => (
-                      <CustomerCard key={idx} idx={idx} member={member}/>
+                      <CustomerCard key={idx} idx={idx} member={member} refresh={hideSideBar}/>
                     ))}
                   </div>
                 </aside>

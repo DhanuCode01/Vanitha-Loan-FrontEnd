@@ -17,7 +17,7 @@ export default function SideBar() {
     
     if (token) {
       axios
-        .post(`${import.meta.env.VITE_BackEndURL}/api/customer/search/${user.UserID}`,
+        .post(`${import.meta.env.VITE_BackEndURL}/api/customer/search${user.UserID}`,
             {data:searchTerm}, 
             {headers: { Authorization: `Bearer ${token}` },
         })
@@ -65,11 +65,10 @@ export default function SideBar() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
-          
 
-
-
+        
   
+        
 
         {/* Members List */}
         <div className="flex-1 overflow-y-auto p-2 md:p-3 space-y-3 bg-primary">

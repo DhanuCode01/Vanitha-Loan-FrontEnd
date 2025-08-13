@@ -50,6 +50,13 @@ export default function AccountPage() {
                   const user = JSON.parse(localStorage.getItem("user"));
                   const creditAmount = creditAmounts[index] || "";
                   const description = descriptions[index] || "";
+
+                  //check if creditAmount AND description is=null 
+                  if (!creditAmount || !description) {
+                  toast.error("Please Fill In Credit Amount And Description❗");
+                  return;
+                }
+
                   if (token) {
                                 try {
                                   const result = await axios.post(

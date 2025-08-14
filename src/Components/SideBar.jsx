@@ -10,7 +10,9 @@ export default function SideBar() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [groups, setGroups] = useState([]);
-  const [groupLoaded, setGroupLoaded] = useState("Loading"); 
+  const [groupLoaded, setGroupLoaded] = useState("Loading");
+  
+  const [searchTypes,setSearchTypes]=useState("member");
   
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem('user'));
@@ -60,11 +62,11 @@ export default function SideBar() {
             toast.error("Please login and try again...❗");
           }
 
-  },[])
+  },[groupLoaded])
 
   const handleGroupChange =(e)=>{
         const key=e.target.value;
-        console.log(key);
+        
 
            if (token) {
             axios
@@ -72,7 +74,6 @@ export default function SideBar() {
                   {headers: { Authorization: `Bearer ${token}` },
               })
               .then((res) => {
-                console.log(res);
                 setMembers(res.data.SearchRows || []);
                 setLoaded("Loaded");
               })
@@ -98,7 +99,45 @@ export default function SideBar() {
             className="w-[200px] h-[70px] object-contain"
           />
         </div>
-          <div className="flex items-center gap-2 px-4 py-1 border-b border-gray-200 bg-white">
+
+             <div className="flex items-center gap-4 px-4 py-2 border-b border-gray-200 bg-white">
+                <span className="font-medium text-gray-700">Select search type:</span>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="searchType"
+                    value="member"
+                    checked={searchTypes === "member"}
+                    onChange={(e) => {setSearchTypes(e.target.value);
+                                      setSearchTerm("");
+                                      }
+                    }
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-600">Member</span>
+                </label>
+
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="searchType"
+                    value="group"
+                    checked={searchTypes === "group"}
+                    onChange={(e) => {setSearchTypes(e.target.value);
+                                      setGroupLoaded("Loading");            
+                    }}
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-600">Group</span>
+                </label>
+              </div>
+
+
+
+
+          {searchTypes =="member" && 
+          (<div className="flex items-center gap-2 px-4 py-1 border-b border-gray-200 bg-white">
             <CiSearch className="text-black text-xl" />
             <input
               type="text"
@@ -107,13 +146,14 @@ export default function SideBar() {
               onChange={(e) =>{
                  setSearchTerm(e.target.value);
                  setLoaded("Loading");
+                 
               }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
-          </div>
+          </div>)}
 
-          
-          <select
+          {searchTypes =="group" &&
+          (<select
             onChange={(e)=>{handleGroupChange(e);
               setLoaded("Loading");
             }}
@@ -126,7 +166,7 @@ export default function SideBar() {
                 {group.GROUP_NAME}
               </option>
             ))}
-          </select>
+          </select>)}
 
 
 

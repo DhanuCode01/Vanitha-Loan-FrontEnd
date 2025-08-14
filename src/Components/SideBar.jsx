@@ -110,6 +110,7 @@ export default function SideBar() {
                     value="member"
                     checked={searchTypes === "member"}
                     onChange={(e) => {setSearchTypes(e.target.value);
+                                      setLoaded("Loading"); 
                                       setSearchTerm("");
                                       }
                     }
@@ -125,7 +126,10 @@ export default function SideBar() {
                     value="group"
                     checked={searchTypes === "group"}
                     onChange={(e) => {setSearchTypes(e.target.value);
-                                      setGroupLoaded("Loading");            
+                                      
+                                      setLoaded("Waiting");
+                                      setGroupLoaded("Loading");
+                                                 
                     }}
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                   />
@@ -205,6 +209,32 @@ export default function SideBar() {
           {loaded === "Error" && (
             <p className="text-red-500 text-sm italic">Failed to load data.</p>
           )}
+          {loaded === "Waiting" && (
+            <div className="flex items-center gap-2 text-blue-500 text-sm italic animate-pulse">
+              <svg
+                className="w-4 h-4 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+              <span>Select Group ...</span>
+            </div>
+          )}
+
 
           {loaded === "Loaded" && members.length === 0 && (
             <p className="text-gray-500 text-sm italic">No members found.</p>

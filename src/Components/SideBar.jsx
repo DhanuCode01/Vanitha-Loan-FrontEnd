@@ -8,6 +8,9 @@ export default function SideBar() {
   const [members, setMembers] = useState([]);
   const [loaded, setLoaded] = useState("Loading");
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [groups, setGroups] = useState([]);
+  const [groupLoaded, setGroupLoaded] = useState("Loading"); 
   
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem('user'));
@@ -34,12 +37,55 @@ export default function SideBar() {
     }
   }, [searchTerm, token, user.UserID]);
 
-    const filteredMembers = members.filter(
-    (member) =>
-      member.CustomerID?.toLowerCase().includes(searchTerm.toLowerCase()) ||            //filter search member in members array
-      member.CUSTOMER_NAME?.toLowerCase().includes(searchTerm.toLowerCase()) ||         //check CustomerID
-      member.NIC?.toLowerCase().includes(searchTerm.toLowerCase())                      //check NIC
-  );
+
+
+  
+  useEffect(()=>{
+
+            if (token) {
+            axios
+              .get(`${import.meta.env.VITE_BackEndURL}/api/customer/group/${user.UserID}`,
+                  {headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((res) => {
+                console.log(res);
+                setGroups(res.data.groupRows || []);
+                setGroupLoaded("Loaded");
+              })
+              .catch((err) => {
+                console.error(err);
+                setGroupLoaded("Error");
+              });
+          } else {
+            toast.error("Please login and try again...❗");
+          }
+
+  },[])
+
+  const handleGroupChange =(e)=>{
+        const key=e.target.value;
+        console.log(key);
+
+           if (token) {
+            axios
+              .get(`${import.meta.env.VITE_BackEndURL}/api/customer/member/${key}`,
+                  {headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((res) => {
+                console.log(res);
+                setMembers(res.data.SearchRows || []);
+                setLoaded("Loaded");
+              })
+              .catch((err) => {
+                console.error(err);
+                setLoaded("Error");
+              });
+          } else {
+            toast.error("Please login and try again...❗");
+          } 
+  }
+          
+
 
   return (
     <div className="h-full md:h-screen flex bg-primary">
@@ -65,7 +111,25 @@ export default function SideBar() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
             />
           </div>
+
           
+          <select
+            onChange={(e)=>{handleGroupChange(e);
+              setLoaded("Loading");
+            }}
+            className="w-[280px] h-[35px] px-3 py-2 my-2 mx-1 border border-gray-300 rounded-md shadow-sm
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+          >
+            <option className="max-w-[300px]" value="">Select Group</option>
+            {groups.map((group) => (
+              <option className="max-w-[300px]" key={group.GroupCode} value={group.GroupCode}>
+                {group.GROUP_NAME}
+              </option>
+            ))}
+          </select>
+
+
+
 
 
 
@@ -106,9 +170,13 @@ export default function SideBar() {
             <p className="text-gray-500 text-sm italic">No members found.</p>
           )}
 
-          {filteredMembers.map((member, idx) => (
+          {loaded === "Loaded" && members.length !== 0 && (
+            members.map((member, idx) => (
             <CustomerCard key={idx} idx={idx} member={member}/>
-          ))}
+          ))
+          )}
+
+          
         </div>
       </aside>
     </div>

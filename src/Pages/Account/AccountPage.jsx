@@ -34,7 +34,7 @@ export default function AccountPage() {
       toast.error("Please login and try again...❗");
       setLoaded("Error");
     }
-  }, []);
+  }, [key]);
 
           function InfoRow({ label, value }) {
             return (

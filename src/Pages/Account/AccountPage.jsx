@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+import { FaTriangleExclamation } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AccountPage() {
@@ -15,6 +17,14 @@ export default function AccountPage() {
   const [descriptions, setDescriptions] = useState({});
 
   const token = localStorage.getItem("token");
+
+  // dialog box state
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedDetail, setSelectedDetail] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  //before show dialog(enter data)  {ConformReEnter}
+  const [availableTotal,setAvailableTotal]=useState("");
 
   useEffect(() => {
     if (token) {
@@ -45,9 +55,15 @@ export default function AccountPage() {
             );
           }
 
-  async function handleOnClick(detail, index) {
-                  const token = localStorage.getItem("token");
+
+
+ 
+  async function confirmAddEntry() {
+                  
+                   const token = localStorage.getItem("token");
                   const user = JSON.parse(localStorage.getItem("user"));
+                  const detail = selectedDetail;
+                  const index = selectedIndex;
                   const creditAmount = creditAmounts[index] || "";
                   const description = descriptions[index] || "";
 
@@ -90,11 +106,53 @@ export default function AccountPage() {
                                 }
                   } else {
                     toast.error("Please Login First");
-                  }
+                  } 
+  }
+
+
+
+  //before show dialog(enter data)  {ConformReEnter}
+  async function checkTodayEntry(detail,index) {
+
+                  const token = localStorage.getItem("token");
+                  const creditAmount = creditAmounts[index] || "";
+                  const description = descriptions[index] || "";
+
+                  //check if creditAmount AND description is=null 
+                  if (!creditAmount || !description) {
+                  toast.error("Please Fill In Credit Amount And Description❗");
+                  return;
+                }
+
+                  if (token) {
+
+                                  try {
+
+                                        const result=await axios
+                                              .post(`${import.meta.env.VITE_BackEndURL}/api/installment/get`,
+                                                  { AccountNumber:detail.ACCOUNT_NO}, 
+
+                                                  {headers: { Authorization: `Bearer ${token}` },
+                                              });
+                                              setAvailableTotal(result.data.totalCredit);
+                                              setShowDialog(true);
+                                    
+                                      } catch (error) {
+                                            //toast.error(error?.response?.data?.error || "ERROR ‼️");
+                                            setAvailableTotal("");
+                                            setShowDialog(true);
+                                      }
+                             
+                                
+                            } else {
+                              toast.error("Please login and try again...❗");
+                            }
+    
   }
 
   return (
     <div className="min-h-screen bg-primary px-4 py-6 md:px-6">
+            
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-xl md:text-2xl font-bold text-black text-center md:text-left">
@@ -197,7 +255,12 @@ export default function AccountPage() {
                   </div>
 
                   <button
-                    onClick={() => handleOnClick(detail, index)}
+                    onClick={() => {
+                      setSelectedDetail(detail);
+                      setSelectedIndex(index);
+                      checkTodayEntry(detail,index)
+                      //setShowDialog(true);
+                    }}
                     className="bg-accent text-white font-semibold px-6 py-2 mt-4 rounded-xl shadow-md transition duration-200 hover:bg-primary hover:text-black"
                   >
                     Add New Entry
@@ -208,6 +271,93 @@ export default function AccountPage() {
           ))}
         </div>
       )}
+
+
+
+
+      {/* Confirmation Dialog */}
+      {showDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-primary rounded-xl p-6 shadow-lg max-w-sm w-full">
+            <h2 className="text-lg font-bold text-gray-800 mb-4">
+              Confirm New Entry
+            </h2>
+
+            <div className="space-y-3 mb-4 text-sm text-accent">
+                {availableTotal !== "" && (
+                  <div className="bg-red-100 border border-red-400 rounded-xl p-4 text-center shadow-md">
+                    <h1 className="flex justify-center items-center text-red-600 text-4xl mb-2 animate-bounce">
+                      <FaTriangleExclamation />
+                    </h1>
+                    <h1 className="text-lg font-bold text-red-700">
+                      Today you already entered a value
+                    </h1>
+                    <p className="text-xl font-extrabold text-red-800 mt-1">
+                      Rs. {parseFloat(availableTotal).toLocaleString()}
+                    </p>
+                  </div>
+                )}
+
+                {availableTotal === "" && (
+                  <div className="bg-green-100 border border-green-400 rounded-xl p-4 text-center shadow-md">
+                    <h1 className="flex justify-center items-center text-green-600 text-4xl mb-2 animate-pulse">
+                      <BsBookmarkCheckFill />
+                    </h1>
+                    <h1 className="text-lg font-bold text-green-700">
+                      No entries recorded today
+                    </h1>
+                  </div>
+                )}
+
+                
+                <p>
+                  Are you sure you want to add this entry for:
+                </p>
+
+                <div className="bg-gray-100 rounded-lg p-3 space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium">Account Number:</span>
+                    <span className="text-gray-800">{selectedDetail?.ACCOUNT_NO}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Credit Amount:</span>
+                    <span className="text-gray-800">
+                      Rs. {creditAmounts[selectedIndex] || "—"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Description:</span>
+                    <span className="text-gray-800">{descriptions[selectedIndex] || "—"}</span>
+                  </div>
+                </div>
+              </div>
+
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => {setShowDialog(false)
+                                setAvailableTotal("")
+                                setCreditAmounts({})
+                                setDescriptions({})
+                              }}
+                className="px-4 py-2 bg-gray-300 rounded-lg text-sm font-medium hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  confirmAddEntry();
+                  setShowDialog(false);
+                }}
+                className="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:bg-secoundary hover:text-black"
+              >
+                Conform
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  
   );
 }

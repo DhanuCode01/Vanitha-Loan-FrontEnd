@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
-export default function CustomerCard({ idx, member ,refresh }) {
+export default function CustomerCard({ idx, member }) {
   const navigate = useNavigate();
   
   // Detect mobile screen size (max width 767px)
@@ -11,7 +11,7 @@ export default function CustomerCard({ idx, member ,refresh }) {
   const handleNavigate = () => {
     if (isMobile) {
       navigate(`/mobile/account/${member.CustomerID}`);
-      refresh();
+      
     } else {
       navigate(`/desktop/account/${member.CustomerID}`);
     }
@@ -22,7 +22,7 @@ export default function CustomerCard({ idx, member ,refresh }) {
       role="button"
       tabIndex={0}
       className="p-2 rounded-xl bg-secondary hover:bg-accent text-black hover:text-white transition-colors duration-200 shadow-md cursor-pointer space-y-1 touch-manipulation"
-      //onClick={handleNavigate}       // Works for mouse click
+      onClick={handleNavigate}       // Works for mouse click
       onTouchEnd={handleNavigate}    // Works for mobile touch
     >
       <h5 className="font-semibold truncate text-xs">

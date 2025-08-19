@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import CustomerCard from "./CustomerCard";
+import CustomerCard from "../Components/CustomerCard";
 import { CiSearch } from "react-icons/ci";
 import { FaBars, FaBarsStaggered } from "react-icons/fa6";
 import { BsCashCoin } from "react-icons/bs";
-import InstallmentCard from "./InstallmentCard";
+import InstallmentCard from "../Components/InstallmentCard";
 import { TbCashBanknoteOff } from "react-icons/tb";
 
 export default function MobileSideBars() {

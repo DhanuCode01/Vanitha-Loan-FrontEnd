@@ -139,9 +139,9 @@ export default function SideBarMobile() {
 
   return (
     <div className="h-full md:h-screen flex bg-primary ">
-      <aside className="w-full h-full bg-white shadow-lg flex flex-col border-r border-gray-200">
+      <aside className="w-full h-full bg-white shadow-lg shadow-accent flex flex-col border-r border-gray-200">
         {/* Logo Section */}
-        <div className="w-full h-[100px] flex justify-center items-center border-b border-gray-200 bg-primary">
+        <div className="w-full h-[60px] flex justify-center items-center border-b border-gray-200 bg-primary">
           <img
             src="/logo.jpg"
             alt="logo"

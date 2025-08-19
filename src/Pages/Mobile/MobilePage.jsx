@@ -12,7 +12,7 @@ export default function MobilePage() {
   return (
     
     <div className="flex flex-col h-screen overflow-hidden">
-        <div className="w-full max-w-[767px] mx-auto h-[500px] p-2 ">
+        <div className="w-full max-w-[767px] mx-auto h-[450px] p-2  ">
         <SideBarMobile/>
         </div>
         <div className="flex-1 overflow-auto">

@@ -11,6 +11,9 @@ export default function SideBar() {
 
   const [groups, setGroups] = useState([]);
   const [groupLoaded, setGroupLoaded] = useState("Loading");
+
+  const [groupSearchBar,setGroupSearchBar]=useState("");
+  const [searchGroupMembers,setSearchGroupMembers]=useState("");
   
   const [searchTypes,setSearchTypes]=useState("member");
   
@@ -19,7 +22,12 @@ export default function SideBar() {
 
 
   useEffect(() => {
-    
+
+    if(searchTerm === ""){  //first time don't need to load all data
+      setLoaded("Waiting");
+      return;
+    }
+
     if (token) {
       axios
         .post(`${import.meta.env.VITE_BackEndURL}/api/customer/search/${user.UserID}`,
@@ -66,7 +74,20 @@ export default function SideBar() {
 
   const handleGroupChange =(e)=>{
         const key=e.target.value;
-        
+            // MemberSearchBar update
+            setGroupSearchBar(key);
+            setSearchGroupMembers("");
+
+
+
+            if(key === ""){           //don't  select group 
+              setLoaded("Waiting");
+              return;
+            }
+            setLoaded("Loading");
+
+
+
 
            if (token) {
             axios
@@ -85,6 +106,33 @@ export default function SideBar() {
             toast.error("Please login and try again...❗");
           } 
   }
+
+    useEffect(() => {
+
+      if(groupSearchBar){
+                if (token) {
+              axios
+                .post(`${import.meta.env.VITE_BackEndURL}/api/customer/search/group/${user.UserID}`,
+                    { data:searchGroupMembers,
+                      groupCode:groupSearchBar
+                    }, 
+                    {headers: { Authorization: `Bearer ${token}` },
+                })
+                .then((res) => {
+                  setMembers(res.data.SearchRows || []);
+                  setLoaded("Loaded");
+                })
+                .catch((err) => {
+                  console.error(err);
+                  setLoaded("Error");
+                });
+            } else {
+              toast.error("Please login and try again...❗");
+            }
+      }
+    
+    
+  }, [searchGroupMembers, token, user.UserID]);
           
 
 
@@ -112,6 +160,7 @@ export default function SideBar() {
                     onChange={(e) => {setSearchTypes(e.target.value);
                                       setLoaded("Loading"); 
                                       setSearchTerm("");
+                                      setGroupSearchBar("")
                                       }
                     }
                     className="w-4 h-4 text-blue-600 focus:ring-blue-500"
@@ -125,8 +174,8 @@ export default function SideBar() {
                     name="searchType"
                     value="group"
                     checked={searchTypes === "group"}
-                    onChange={(e) => {setSearchTypes(e.target.value);
-                                      
+                    onChange={(e) => {
+                                      setSearchTypes(e.target.value);                  
                                       setLoaded("Waiting");
                                       setGroupLoaded("Loading");
                                                  
@@ -157,20 +206,42 @@ export default function SideBar() {
           </div>)}
 
           {searchTypes =="group" &&
-          (<select
-            onChange={(e)=>{handleGroupChange(e);
-              setLoaded("Loading");
-            }}
-            className="w-[280px] h-[35px] px-3 py-2 my-2 mx-1 border border-gray-300 rounded-md shadow-sm
-                      focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
-          >
-            <option className="max-w-[300px]" value="">Select Group</option>
-            {groups.map((group) => (
-              <option className="max-w-[300px]" key={group.GroupCode} value={group.GroupCode}>
-                {group.GROUP_NAME}
-              </option>
-            ))}
-          </select>)}
+          
+          (
+            <>
+                <select
+                  onChange={(e)=>{handleGroupChange(e);
+                  }}
+                  className="w-[280px] h-[35px] px-3 py-2 my-2 mx-1 border border-gray-300 rounded-md shadow-sm
+                            focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                >
+                  <option className="max-w-[300px]" value="" >Select Group</option>
+                  {groups.map((group) => (
+                    <option className="max-w-[300px]" key={group.GroupCode} value={group.GroupCode}>
+                      {group.GROUP_NAME}
+                    </option>
+                  ))}
+                </select>
+
+                      {groupSearchBar  !==""  && (
+                        <div className="flex items-center gap-2 px-4 py-1 border-b border-gray-200 bg-white">
+                        <CiSearch className="text-black text-xl" />
+                        <input
+                          type="text"
+                          placeholder="Search...."
+                          value={searchGroupMembers}
+                          onChange={(e) =>{
+                            setSearchGroupMembers(e.target.value);
+                            setLoaded("Loading");
+                            
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        />
+                      </div>
+                      )}
+          
+            </>
+          )}
 
 
 
@@ -181,10 +252,10 @@ export default function SideBar() {
 
         {/* Members List */}
         <div className="flex-1 overflow-y-auto p-2 md:p-3 space-y-3 bg-primary">
-          {loaded === "Loading" && (
+          {loaded === "Waiting" && (
             <div className="flex items-center gap-3 text-accent animate-pulse">
               <svg
-                className="w-5 h-5 animate-spin text-accent"
+                className="w-8 h-8 animate-spin text-accent"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -202,17 +273,17 @@ export default function SideBar() {
                   d="M4 12a8 8 0 018-8v4l3-3-3-3v4a10 10 0 1010 10h-2a8 8 0 11-8-8z"
                 ></path>
               </svg>
-              <span className="text-sm font-medium">Loading members...</span>
+              <span className="text-sm font-medium">Waiting for input…</span>
             </div>
           )}
 
           {loaded === "Error" && (
             <p className="text-red-500 text-sm italic">Failed to load data.</p>
           )}
-          {loaded === "Waiting" && (
+          {loaded === "Loading" && (
             <div className="flex items-center gap-2 text-blue-500 text-sm italic animate-pulse">
               <svg
-                className="w-4 h-4 animate-spin"
+                className="w-8 h-8 animate-spin"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -231,7 +302,7 @@ export default function SideBar() {
                   d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                 ></path>
               </svg>
-              <span>Select Group ...</span>
+              <span>Loading members...</span>
             </div>
           )}
 

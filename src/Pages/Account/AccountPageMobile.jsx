@@ -148,7 +148,7 @@ export default function AccountPageMobile() {
   }
 
   return (
-    <div className="min-h-screen bg-primary px-4 py-2 md:px-6">
+    <div className="min-h-screen bg-primary px-4 py-2 md:px-6 border-t-6 border-secoundary pt-4 mt-4 rounded-2xl ">
       {/* Header */}
       <div className="mb-1">
         <h1 className="text-xl md:text-2xl font-bold text-black text-center md:text-left">

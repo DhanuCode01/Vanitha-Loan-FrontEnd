@@ -141,14 +141,14 @@ export default function SideBarMobile() {
 
 
   return (
-    <div className="h-full md:h-screen flex bg-primary ">
+    <div className="h-full md:h-screen flex bg-primary  pb-2 rounded-2xl ">
       <aside className="w-full h-full bg-white shadow-lg shadow-secoundary flex flex-col border-r border-gray-200">
         {/* Logo Section */}
         <div className="w-full h-[60px] flex justify-center items-center border-b border-gray-200 bg-primary ">
           <img
             src="/logo.jpg"
             alt="logo"
-            className="w-[200px] h-[70px] object-contain"
+            className="w-[200px] h-[65px] object-contain"
           />
           <MdOutlineCompress
                 onClick={() => setShowSideBar(!showSideBar)}

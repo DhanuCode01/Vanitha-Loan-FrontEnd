@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import InstallmentCard from "./InstallmentCard";
 
 
-export default function RightBar() {
+export default function RightBar({refresh}) {
   const [members, setMembers] = useState([]);
   const [loaded, SetLoaded] = useState("loading");
 
@@ -31,12 +31,9 @@ export default function RightBar() {
       toast.error("Please login and try again...❗");
       SetLoaded("Error");
     }
-  }, []);
+  }, [loaded,refresh]);
 
 const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 0);
-
-
-
 
 
   return (
@@ -78,7 +75,7 @@ const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 
                     <InstallmentCard key={idx} idx={idx} member={member}/>
                   ))}
               <h6 className="mt-4 text-lg font-semibold text-accent">
-                Today Total: {total}
+                Today Total: {total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h6>
           </div>
           )}

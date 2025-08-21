@@ -77,7 +77,7 @@ const total = members.reduce((acc, member) => acc + (member.CreditAmount || 0), 
                     <InstallmentCard key={idx} idx={idx} member={member}/>
                   ))}
               <h6 className="mt-4 text-base md:text-lg font-semibold text-accent">
-                Today Total: {total}
+                Today Total: {total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h6>
           </div>
           )}

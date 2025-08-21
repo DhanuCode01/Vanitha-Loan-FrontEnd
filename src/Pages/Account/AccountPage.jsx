@@ -5,7 +5,7 @@ import { BsBookmarkCheckFill } from "react-icons/bs";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function AccountPage() {
+export default function AccountPage({onEntryAdded }) {
   const params = useParams();
   const key = params.key;
   const navigate = useNavigate();
@@ -100,6 +100,9 @@ export default function AccountPage() {
                                   // Optional: clear inputs after success
                                   setCreditAmounts((prev) => ({ ...prev, [index]: "" }));
                                   setDescriptions((prev) => ({ ...prev, [index]: "" }));
+
+                                  //  trigger RightBar refresh
+                                  if (onEntryAdded) onEntryAdded(); //if you have a 'onEntryAdded' call it
                                 } catch (err) {
                                   console.log(err);
                                   toast.error(err?.response?.data?.error || "ERROR ‼️");

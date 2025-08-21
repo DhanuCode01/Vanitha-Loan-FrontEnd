@@ -22,7 +22,7 @@ export default function HomePage() {
       <div className="md:w-[300px] w-full">
         <SideBar />
       </div>
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto relative">
         <Routes>
           <Route path="/customer" element={<CustomerPage/>} />
           <Route path="/account/:key" element={<AccountPage onEntryAdded={triggerRightBarRefresh}/>} />

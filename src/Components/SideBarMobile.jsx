@@ -315,13 +315,13 @@ export default function SideBarMobile() {
                       {loaded === "Loaded" && members.length === 0 && (
                         <p className="text-gray-500 text-sm italic">No members found.</p>
                       )}
-
-                      {loaded === "Loaded" && members.length !== 0 && (
-                        members.map((member, idx) => (
-                        <CustomerCard key={idx} idx={idx} member={member}/>
-                      ))
-                      )}
-
+                <div className="h-51">
+                            {loaded === "Loaded" && members.length !== 0 && (
+                              members.map((member, idx) => (
+                              <CustomerCard key={idx} idx={idx} member={member}/>
+                            ))
+                            )}
+                </div>
                       
                     </div>
            </div>)}         

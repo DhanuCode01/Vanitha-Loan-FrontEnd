@@ -2,13 +2,17 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { FaEye, FaEyeSlash, FaRegUser } from 'react-icons/fa';
+import { TbLockPassword } from 'react-icons/tb';
 
 export default function LoginPage() {
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+   const [showPassword, setShowPassword] = useState(false);
 
   const handleOnSubmit = (e) => {
+
     e.preventDefault();
     const backEndURL = import.meta.env.VITE_BackEndURL;
 
@@ -55,25 +59,50 @@ export default function LoginPage() {
           <img
             src="/logo.jpg"
             alt="logo"
-            className="w-[80px] h-[80px] object-cover rounded-xl mb-2"
+            className="w-[80px] h-[80px] object-cover  mb-2"
           />
+              <div>
+              
+                      <div className="mb-4 w-full">
+                      <label className="block text-sm font-medium text-gray-800 mb-1">
+                        User Name
+                      </label>
+                      <div className="flex items-center border border-gray-700 px-2 bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
+                        <FaRegUser className="mx-3 text-gray-600 text-lg" />
+                        <input
+                          type="text"
+                          className="flex-1 h-9 px-2 bg-transparent text-black text-lg outline-none rounded-r-xl"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                        />
+                      </div>
+                    </div>
 
-          <input
-            type="text"
-            placeholder="Enter Full Name"
-            className="w-full mb-4 px-4 py-3 bg-transparent border-b-2 border-gray-700 text-black text-lg outline-none placeholder-gray-700"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full mb-6 px-4 py-3 bg-transparent border-b-2 border-gray-700 text-black text-lg outline-none placeholder-gray-700"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+                    <div className="mb-4 w-full">
+                      <label className="block text-sm font-medium text-gray-800 mb-1">
+                        Password
+                      </label>
+                      <div className="flex items-center border border-gray-700 px-2  bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
+                        <TbLockPassword className="mx-3 text-gray-600 text-lg" />
+                        <input
+                          type={showPassword ? "text":"password"}
+                          className="flex-1 h-9 px-2 bg-transparent text-black text-lg outline-none rounded-r-xl"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
 
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="text-gray-600 hover:text-gray-900 px-2"
+                        >
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                      </div>
+                    </div>
+
+              </div>
           <button
             type="submit"
             className="w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition duration-300"

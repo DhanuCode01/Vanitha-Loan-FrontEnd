@@ -67,7 +67,7 @@ export default function LoginPage() {
                       <label className="block text-sm font-medium text-gray-800 mb-1">
                         User Name
                       </label>
-                      <div className="flex items-center border border-gray-700 px-2 bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
+                      <div className="flex items-center border border-gray-700  bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
                         <FaRegUser className="mx-3 text-gray-600 text-lg" />
                         <input
                           type="text"
@@ -83,7 +83,7 @@ export default function LoginPage() {
                       <label className="block text-sm font-medium text-gray-800 mb-1">
                         Password
                       </label>
-                      <div className="flex items-center border border-gray-700 px-2  bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
+                      <div className="flex items-center border border-gray-700   bg-white/60 backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500">
                         <TbLockPassword className="mx-3 text-gray-600 text-lg" />
                         <input
                           type={showPassword ? "text":"password"}

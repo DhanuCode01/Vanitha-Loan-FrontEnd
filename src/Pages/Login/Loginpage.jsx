@@ -71,7 +71,7 @@ export default function LoginPage() {
                         <FaRegUser className="mx-3 text-gray-600 text-lg" />
                         <input
                           type="text"
-                          className="flex-1 h-9 px-2 bg-transparent text-black text-lg outline-none rounded-r-xl"
+                          className="flex-1 h-9  bg-transparent text-black text-lg outline-none rounded-r-xl"
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                         />
@@ -79,7 +79,7 @@ export default function LoginPage() {
                     </div>
 
 
-                    <div className="mb-4 w-full">
+                    <div className="mb-4 w-full ">
                       <label className="block text-sm font-medium text-gray-800 mb-1">
                         Password
                       </label>
@@ -87,7 +87,7 @@ export default function LoginPage() {
                         <TbLockPassword className="mx-3 text-gray-600 text-lg" />
                         <input
                           type={showPassword ? "text":"password"}
-                          className="flex-1 h-9 px-2 bg-transparent text-black text-lg outline-none rounded-r-xl"
+                          className="flex-1 h-9 bg-transparent text-black text-lg outline-none rounded-r-xl"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                         />

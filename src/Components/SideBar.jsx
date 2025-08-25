@@ -158,7 +158,7 @@ export default function SideBar() {
                     value="member"
                     checked={searchTypes === "member"}
                     onChange={(e) => {setSearchTypes(e.target.value);
-                                      setLoaded("Loading"); 
+                                      setLoaded("Waiting"); 
                                       setSearchTerm("");
                                       setGroupSearchBar("")
                                       }
@@ -254,7 +254,7 @@ export default function SideBar() {
         <div className="flex-1 overflow-y-auto p-2 md:p-3 space-y-3 bg-primary">
           {loaded === "Waiting" && (
             <div className="flex items-center gap-3 text-accent animate-pulse">
-              <svg
+              {/* <svg
                 className="w-8 h-8 animate-spin text-accent"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -272,7 +272,7 @@ export default function SideBar() {
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8v4l3-3-3-3v4a10 10 0 1010 10h-2a8 8 0 11-8-8z"
                 ></path>
-              </svg>
+              </svg> */}
               <span className="text-sm font-medium">Waiting for input…</span>
             </div>
           )}

@@ -18,7 +18,7 @@ export default function MobilePage() {
 
         <div className="flex-1 overflow-auto">
         <Routes>
-          <Route path="/" element={<CustomerPage/>} />
+          <Route path="/" element={<RightBar/>} />
           <Route path="/account/:key" element={<AccountPageMobile/>} />
         </Routes>
       </div>

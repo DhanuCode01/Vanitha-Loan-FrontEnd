@@ -10,12 +10,14 @@ export default function CustomerPage() {
 
   const token = localStorage.getItem("token");
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const navigate=useNavigate();
 
   useEffect(() => {
     if (token) {
       axios
-        .get(`${import.meta.env.VITE_BackEndURL}/api/customer/all`, {
+        .get(`${import.meta.env.VITE_BackEndURL}/api/customer/all/${user.UserID}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

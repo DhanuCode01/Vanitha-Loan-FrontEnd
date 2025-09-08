@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { CiSearch } from "react-icons/ci";
 import CustomerCard from "./CustomerCard";
 import { MdOutlineCompress } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { PiHandDeposit } from "react-icons/pi";
 
 export default function SideBarMobile() {
   const[showSideBar,setShowSideBar]=useState(true);
@@ -24,6 +26,7 @@ export default function SideBarMobile() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem('user'));
 
+   const navigate=useNavigate();
 
   useEffect(() => {
 
@@ -144,7 +147,7 @@ export default function SideBarMobile() {
     <div className="h-full md:h-screen flex bg-primary  pb-2 rounded-2xl ">
       <aside className="w-full h-full bg-white shadow-lg shadow-secoundary flex flex-col border-r border-gray-200">
         {/* Logo Section */}
-        <div className="w-full h-[60px] flex justify-center items-center border-b border-gray-200 bg-primary ">
+        <div className="w-full h-[60px] flex justify-center items-center border-b border-gray-200 bg-primary relative ">
           <img
             src="/logo.jpg"
             alt="logo"
@@ -152,8 +155,13 @@ export default function SideBarMobile() {
           />
           <MdOutlineCompress
                 onClick={() => setShowSideBar(!showSideBar)}
-                className="ml-2 p-2 text-3xl text-black bg-white shadow-lg "
+                className="ml-2 p-2 text-3xl text-black bg-white shadow-lg absolute right-15"
             />
+
+          <PiHandDeposit
+                onClick={()=> navigate("/mobile/")}
+                className="ml-2 p-2 text-3xl text-black bg-white shadow-lg absolute right-5"
+           />
 
         </div>
           {showSideBar && (<div>

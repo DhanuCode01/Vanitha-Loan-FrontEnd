@@ -67,9 +67,53 @@ const handleAccountChange = (accountNumber) => {
 };
 
 async function handleAddDeposited() {
+            if (!slip) {
+            toast.error("Please upload a slip❗");
+            return;
+          }
           // Convert file → ArrayBuffer → Uint8Array (buffer data)
         const arrayBuffer = await slip.arrayBuffer();
         const bufferData = new Uint8Array(arrayBuffer);
+
+         const token = localStorage.getItem("token");
+         const user = JSON.parse(localStorage.getItem("user"));
+
+        if (token) {
+                                try {
+                                  const result = await axios.post(
+                                    `${import.meta.env.VITE_BackEndURL}/api/deposits`,
+                                    {
+                                      
+                                      date:date,
+                                      NameOfAccountHolder:nameOfAccountHolder,
+                                      slip: bufferData,
+                                      Total: selectedTotal,
+                                      UserID: user.UserID,
+                                      AccountNumbers:selectedAccounts,
+                                    },
+                                    {
+                                      headers: {
+                                        Authorization: "Bearer " + token,
+                                      },
+                                    }
+                                  );
+
+                                  toast.success(result?.data?.message || "Success✔️");
+
+                                  // Optional: clear inputs after success
+                                  // Correct reset
+                                  setNameOfAccountHolder("");
+                                  setDate("");
+                                  setSlip(null);
+                                  setSelectedAccounts([]);
+
+                                } catch (err) {
+                                  console.log(err);
+                                  toast.error(err?.response?.data?.error || "ERROR ‼️");
+                                }
+                  } else {
+                    toast.error("Please Login First");
+                  }
     
 }
 

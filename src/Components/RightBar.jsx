@@ -72,8 +72,12 @@ async function handleAddDeposited() {
             return;
           }
           // Convert file → ArrayBuffer → Uint8Array (buffer data)
-        const arrayBuffer = await slip.arrayBuffer();
-        const bufferData = new Uint8Array(arrayBuffer);
+          const arrayBuffer = await slip.arrayBuffer();
+          const uint8Array = new Uint8Array(arrayBuffer);
+
+          // Convert Uint8Array into a normal array (so JSON.stringify works well)
+          const bufferData = Array.from(uint8Array);
+
 
          const token = localStorage.getItem("token");
          const user = JSON.parse(localStorage.getItem("user"));
@@ -86,7 +90,7 @@ async function handleAddDeposited() {
                                       
                                       date:date,
                                       NameOfAccountHolder:nameOfAccountHolder,
-                                      slip: bufferData,
+                                      Slip: bufferData,
                                       Total: selectedTotal,
                                       UserID: user.UserID,
                                       AccountNumbers:selectedAccounts,
@@ -106,6 +110,7 @@ async function handleAddDeposited() {
                                   setDate("");
                                   setSlip(null);
                                   setSelectedAccounts([]);
+                                  SetLoaded("loading");
 
                                 } catch (err) {
                                   console.log(err);
